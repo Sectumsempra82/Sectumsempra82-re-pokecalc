@@ -1,0 +1,20 @@
+ul {
+    display: block;
+    list-style-type: none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0px;
+    padding-inline-start: 0;
+    width: 60vw;
+    padding-left: 5.4vw;
+    max-height: 30vh;
+    overflow-y: scroll;
+}
+
+li {
+    background-color: white;
+    color: black;
+
+}
+
