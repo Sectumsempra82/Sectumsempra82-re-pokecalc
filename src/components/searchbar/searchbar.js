@@ -1,91 +1,65 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useRef } from 'react';
 import './searchbar.css';
 import Hints from '../hints/hints';
 
-class Searchbar extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-          value: '',
-          focusSearch: 'OFF',
-          Searched: 'False'
-        };
-    
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleHint = this.handleHint.bind(this);
-        this.handleFocus = this.handleFocus.bind(this);
-        this.setPokemon = props.setPokemon.bind(this);
-      }
-    
-      handleChange(event) {
-        this.setState({value: event.target.value});
-        if(event.target.value !== this.state.value){
-          this.setState({Searched: false})
-        }
-      }
-    
-      handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        this.setState({Searched: true});
-        this.setPokemon(this.state.value);
+
+
+export default function Searchbar(props) {
+    const[value, setValue] = useState('');
+    const[focusSearch, setFocusSearch] = useState('OFF');
+    const[searched, setSearched] = useState(false);
+    const inputVal = useRef(null)
+
+    const handleSubmit = (event) => {
+        setValue(inputVal.current.value);
+        setSearched(true);
         event.preventDefault();
-      }
+    }
 
-      handleHint(hint) {
-        this.setState({value: hint, Searched: true}, () => {
-          this.setPokemon(this.state.value);
-        })
-        
-      }
-
-      handleFocus(status){
-        this.setState({focusSearch: status})
-      }
-
-
+    const handleHint = (hint) => {
+        setValue(hint);
+        props.setPokemon(hint);
+    }
     
-      render() {
 
-
-        return (
-          <form onSubmit={this.handleSubmit} className="Searchbar">
-            <div>
-            <label>
-              Name: &nbsp; &nbsp;
-             
-              
-            </label>
-
-            <input 
-                placeholder="Type a pokemon name to search, type in at least 3 chars to show hints"
-                type="text" 
-                value={this.state.value} 
-                onChange={this.handleChange}
-                onFocus={(e) => {
-                  
-                  if (!e.currentTarget.contains(e.relatedTarget)) {
-                    // Not triggered when swapping focus between children
-                    this.handleFocus('ON');
-                  }
-                }}
-                onBlur={(e) => {
-                  if (!e.currentTarget.contains(e.relatedTarget)) {
-                    // Not triggered when swapping focus between children
-                    this.handleFocus('OFF');
-                  }
-                }}
-
-              />
-                <input type="submit" value="Submit" />
-
-                </div>
-            {(this.state.value !== '' && this.state.value.length > 2 && !this.state.Searched) ? <Hints value={this.state.value} setSearch={this.handleHint}></Hints> : <Fragment></Fragment>}
-            <span>&nbsp;</span>
+    return (
+        <form onSubmit={handleSubmit} className="Searchbar">
+          <div>
+          <label>
+            Name: &nbsp; &nbsp;
+           
             
-          </form>
-        );
-      }
+          </label>
+
+          <input 
+              placeholder="Type a pokemon name to search, type in at least 3 chars to show hints"
+              type="text" 
+              value={value} 
+              onChange={() => setValue(inputVal.current.value)}
+              ref={inputVal}
+              onFocus={(e) => {
+                
+                if (!e.currentTarget.contains(e.relatedTarget)) {
+                  // Not triggered when swapping focus between children
+                  setFocusSearch('ON');
+                }
+              }}
+              onBlur={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget)) {
+                  // Not triggered when swapping focus between children
+                  setFocusSearch('OFF');
+                }
+              }}
+
+            />
+              <input type="submit" value="Submit" />
+
+              </div>
+          {(value !== '' && value.length > 2 && !searched ) ? <Hints value={value} setSearch={handleHint}></Hints> : <Fragment></Fragment>}
+          <span>&nbsp;</span>
+          
+        </form>
+      );
+
 }
 
-export default Searchbar;
