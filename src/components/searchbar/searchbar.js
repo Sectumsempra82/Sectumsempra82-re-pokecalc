@@ -21,19 +21,19 @@ class Searchbar extends React.Component{
       handleChange(event) {
         this.setState({value: event.target.value});
         if(event.target.value !== this.state.value){
-          this.setState({Searched: 'False'})
+          this.setState({Searched: false})
         }
       }
     
       handleSubmit(event) {
         alert('A name was submitted: ' + this.state.value);
-        this.setState({Searched: 'True'});
+        this.setState({Searched: true});
         this.setPokemon(this.state.value);
         event.preventDefault();
       }
 
       handleHint(hint) {
-        this.setState({value: hint, Searched: 'True'}, () => {
+        this.setState({value: hint, Searched: true}, () => {
           this.setPokemon(this.state.value);
         })
         
@@ -80,7 +80,7 @@ class Searchbar extends React.Component{
                 <input type="submit" value="Submit" />
 
                 </div>
-            {(this.state.value !== '' && this.state.value.length > 2 && this.state.Searched === 'False') ? <Hints value={this.state.value} setSearch={this.handleHint}></Hints> : <Fragment></Fragment>}
+            {(this.state.value !== '' && this.state.value.length > 2 && !this.state.Searched) ? <Hints value={this.state.value} setSearch={this.handleHint}></Hints> : <Fragment></Fragment>}
             <span>&nbsp;</span>
             
           </form>
