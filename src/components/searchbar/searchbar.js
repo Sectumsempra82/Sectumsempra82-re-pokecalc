@@ -1,61 +1,81 @@
-import React, { Fragment, useRef } from 'react';
-import './searchbar.css';
-import Hints from '../hints/hints';
+import React, {useRef,useState } from 'react';
+import useHints from '../hints/hints';
+import {useCombobox} from 'downshift'
 
 
 
 export default function Searchbar(props) {
     const[value, setValue] = useState('');
-    const[focusSearch, setFocusSearch] = useState('OFF');
-    const[searched, setSearched] = useState(false);
+  
     const inputVal = useRef(null)
+    const hints = useHints(value)
+
+
+    const {
+      isOpen,
+      getToggleButtonProps,
+      getLabelProps,
+      getMenuProps,
+      getInputProps,
+      getComboboxProps,
+      highlightedIndex,
+      getItemProps,
+    } = useCombobox({
+      items: hints,
+      onInputValueChange: ({inputValue}) => {
+        setValue({inputValue});
+      },
+      onSelectedItemChange : ({selectedItem}) => {
+        props.setPokemon(selectedItem);
+      }
+    })
 
     const handleSubmit = (event) => {
-        setValue(inputVal.current.value);
-        setSearched(true);
+        props.setPokemon(inputVal.current.value);
         event.preventDefault();
     }
 
-    const handleHint = (hint) => {
-        setValue(hint);
-        props.setPokemon(hint);
-    }
-    
 
     return (
         <form onSubmit={handleSubmit} className="Searchbar">
           <div>
           <label>
             Name: &nbsp; &nbsp;
-           
+              <>
+                <label {...getLabelProps()}>Choose an element:</label>
+                <div {...getComboboxProps()}>
+                  <input {...getInputProps({ref: inputVal})} />
+                  <button
+                    type="button"
+                    {...getToggleButtonProps()}
+                    aria-label={'toggle menu'}
+                  >
+                    &#8595;
+                  </button>
+                </div>
+                <ul {...getMenuProps({hints})} >
+                {isOpen &&
+                  hints.map((item, index) => (
+                    <li
+                      style={
+                        highlightedIndex === index ? {backgroundColor: '#bde4ff'} : {}
+                      }
+                      key={`${item}${index}`}
+                      {...getItemProps({item, index})}
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </>
             
           </label>
 
-          <input 
-              placeholder="Type a pokemon name to search, type in at least 3 chars to show hints"
-              type="text" 
-              value={value} 
-              onChange={() => setValue(inputVal.current.value)}
-              ref={inputVal}
-              onFocus={(e) => {
-                
-                if (!e.currentTarget.contains(e.relatedTarget)) {
-                  // Not triggered when swapping focus between children
-                  setFocusSearch('ON');
-                }
-              }}
-              onBlur={(e) => {
-                if (!e.currentTarget.contains(e.relatedTarget)) {
-                  // Not triggered when swapping focus between children
-                  setFocusSearch('OFF');
-                }
-              }}
-
-            />
+          
               <input type="submit" value="Submit" />
 
               </div>
-          {(value !== '' && value.length > 2 && !searched ) ? <Hints value={value} setSearch={handleHint}></Hints> : <Fragment></Fragment>}
+          {/* {(value !== '' && value.length > 2 && !searched ) ? <Hints value={value} setSearch={handleHint}></Hints> : <Fragment></Fragment>} */}
           <span>&nbsp;</span>
           
         </form>

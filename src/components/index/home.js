@@ -10,5 +10,3 @@ export default function Homepage(props) {
         )
 
 }
-
-export default Homepage;
