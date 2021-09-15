@@ -23,6 +23,7 @@ export default function Searchbar(props) {
     } = useCombobox({
       items: hints,
       onInputValueChange: ({inputValue}) => {
+        inputValue = inputValue.toLowerCase();
         setValue({inputValue});
       },
       onSelectedItemChange : ({selectedItem}) => {
