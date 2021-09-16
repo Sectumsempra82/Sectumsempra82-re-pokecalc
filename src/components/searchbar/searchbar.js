@@ -76,7 +76,7 @@ export default function Searchbar(props) {
               <input type="submit" value="Submit" />
 
               </div>
-          {/* {(value !== '' && value.length > 2 && !searched ) ? <Hints value={value} setSearch={handleHint}></Hints> : <Fragment></Fragment>} */}
+         
           <span>&nbsp;</span>
           
         </form>

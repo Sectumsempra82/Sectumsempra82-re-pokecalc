@@ -1,15 +1,33 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { setupCache } from 'axios-cache-adapter'
+const headers = {
+  'Content-Type': 'application/json',
+  'access-token': '',
+  'Access-Control-Allow-Origin': '*',
+}
 
+
+const cache = setupCache({
+  maxAge: 15 * 60 * 1000,
+  exclude: {
+    // Only exclude PUT, PATCH and DELETE methods from cache
+    methods: ['put', 'patch', 'delete']
+  }
+})
+const api = axios.create({
+  adapter: cache.adapter
+})
 
 export default function useHints(props) {
   const [hints, setHints] = useState([]);
 
   useEffect(() => {
 
+
     const getHints = ( name ) => {
-      axios
+      api
         .post('https://beta.pokeapi.co/graphql/v1beta', {
 
             query: `
@@ -20,10 +38,15 @@ export default function useHints(props) {
                 }
             }
               `
+              
           
-        })
+        },
+        {crossdomain: true},
+        {headers: headers}
+      )
         .then((response) => {
           console.log(response.data.data.pokemon_v2_pokemon);
+          console.log(response.request.fromCache ? "Cached!" : "Not cached :(")
           if(response.data.data.pokemon_v2_pokemon){
             var hintsFiltered = response.data.data.pokemon_v2_pokemon.map(pkm => pkm.name);
             console.log(hintsFiltered);
@@ -47,4 +70,3 @@ export default function useHints(props) {
 
   return (hints); 
 }
-
