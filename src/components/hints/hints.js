@@ -20,7 +20,7 @@ const api = axios.create({
   adapter: cache.adapter
 })
 
-export default function useHints(props) {
+export default function useHints(inputValue) {
   const [hints, setHints] = useState([]);
 
   useEffect(() => {
@@ -59,14 +59,14 @@ export default function useHints(props) {
         ;
     }
     
-    if(props.inputValue && props.inputValue.length > 2 ){
-      getHints(props.inputValue, props.inputValue);
+    if(inputValue && inputValue.length > 2 ){
+      getHints(inputValue);
     } else {
       console.log('name too short');
       setHints([]);
     }
   
-  }, [props.inputValue])
+  }, [inputValue])
 
   return (hints); 
 }

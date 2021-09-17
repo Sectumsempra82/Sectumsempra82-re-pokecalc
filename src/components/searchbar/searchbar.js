@@ -1,86 +1,46 @@
-import React, {useRef,useState } from 'react';
+import React, { useRef, useState } from 'react';
 import useHints from '../hints/hints';
-import {useCombobox} from 'downshift'
-
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 
 export default function Searchbar(props) {
-    const[value, setValue] = useState('');
-  
-    const inputVal = useRef(null)
-    const hints = useHints(value)
+  const [value, setValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
+  const inputVal = useRef(null)
+  const hints = useHints(value)
 
+  const handleSubmit = (event) => {
+    props.setPokemon(value);
+    event.preventDefault();
+  }
 
-    const {
-      isOpen,
-      getToggleButtonProps,
-      getLabelProps,
-      getMenuProps,
-      getInputProps,
-      getComboboxProps,
-      highlightedIndex,
-      getItemProps,
-    } = useCombobox({
-      items: hints,
-      onInputValueChange: ({inputValue}) => {
-        inputValue = inputValue.toLowerCase();
-        setValue({inputValue});
-      },
-      onSelectedItemChange : ({selectedItem}) => {
-        props.setPokemon(selectedItem);
-      }
-    })
+  return (
 
-    const handleSubmit = (event) => {
-        props.setPokemon(inputVal.current.value);
-        event.preventDefault();
-    }
+    <Stack spacing={2} direction="row" style={{ margin: 'auto', width: '25vw' }} >
+      <Autocomplete
+        freeSolo
+        value={inputValue}
+        onChange={(event, newValue) => {
+          setInputValue(newValue.toLowerCase());
+          setValue(newValue.toLowerCase());
+          props.setPokemon(newValue.toLowerCase());
+        }}
+        inputValue={value}
+        onInputChange={(event, newInputValue) => {
+          setValue(newInputValue.toLowerCase());
+        }}
+        id="controllable-states-demo"
+        options={hints}
+        sx={{ width: 300 }}
+        renderInput={(params) => <TextField {...params} label="Search a pokemon" />}
+      />
+      <Button onClick={(e) => { handleSubmit(e) }} > SEARCH </Button>
+    </Stack>
 
-
-    return (
-        <form onSubmit={handleSubmit} className="Searchbar">
-          <div>
-          <label>
-            Name: &nbsp; &nbsp;
-              <>
-                <label {...getLabelProps()}>Choose an element:</label>
-                <div {...getComboboxProps()}>
-                  <input {...getInputProps({ref: inputVal})} />
-                  <button
-                    type="button"
-                    {...getToggleButtonProps()}
-                    aria-label={'toggle menu'}
-                  >
-                    &#8595;
-                  </button>
-                </div>
-                <ul {...getMenuProps({hints})} >
-                {isOpen &&
-                  hints.map((item, index) => (
-                    <li
-                      style={
-                        highlightedIndex === index ? {backgroundColor: '#bde4ff'} : {}
-                      }
-                      key={`${item}${index}`}
-                      {...getItemProps({item, index})}
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </>
-            
-          </label>
-
-          
-              <input type="submit" value="Submit" />
-
-              </div>
-         
-          <span>&nbsp;</span>
-          
-        </form>
-      );
+  );
 
 }
 
