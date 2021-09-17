@@ -1,22 +1,24 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import useHints from '../hints/hints';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-
+import { useTheme } from '@mui/material/styles';
+import {ColorModeContext} from '../../style/themeCtx';
 
 export default function Searchbar(props) {
   const [value, setValue] = useState('');
   const [inputValue, setInputValue] = useState('');
-  const inputVal = useRef(null)
   const hints = useHints(value)
+  const theme = useTheme();
+  const colorMode = React.useContext(ColorModeContext);
 
   const handleSubmit = (event) => {
     props.setPokemon(value);
     event.preventDefault();
   }
-
+  
   return (
 
     <Stack spacing={2} direction="row" style={{ margin: 'auto', width: '25vw' }} >
@@ -38,6 +40,7 @@ export default function Searchbar(props) {
         renderInput={(params) => <TextField {...params} label="Search a pokemon" />}
       />
       <Button onClick={(e) => { handleSubmit(e) }} > SEARCH </Button>
+      <Button onClick={(e) => { colorMode.toggleColorMode() }} > CHANGE THEME </Button>
     </Stack>
 
   );

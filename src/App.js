@@ -6,10 +6,17 @@ import Searchbar from './components/searchbar/searchbar';
 import Pokemon from './components/pokemon/pokemon';
 import React, {useState, Fragment} from 'react';
 
+import {ToggleColorMode } from './themeToggler';
+
 function App() {
   const [pokemonName, setPokemonName] = useState('');
-  return (
 
+
+
+
+
+  return (
+    <ToggleColorMode>
     <div className="App">
       <header className="App-header"> 
         <Homepage/>
@@ -17,6 +24,7 @@ function App() {
     <Searchbar setPokemon={setPokemonName}></Searchbar>
     {pokemonName !== ''? <Pokemon value={pokemonName}></Pokemon> : <Fragment></Fragment>}
     </div>
+    </ToggleColorMode>
   );
 }
 
