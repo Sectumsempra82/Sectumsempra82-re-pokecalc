@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import './components/index/home';
 import Homepage from './components/index/home';
 import './components/searchbar/searchbar';
@@ -13,10 +13,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
   const [pokemonName, setPokemonName] = useState('');
-
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)', { noSsr: true });
-  console.log('THEMEDEFAULT: ' + prefersDarkMode ? 'dark' : 'light');
   const [mode, setMode] = React.useState(prefersDarkMode ? 'dark' : 'light');
+
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
@@ -35,7 +34,7 @@ function App() {
       }),
     [mode],
   );
-  console.log(theme.palette.background.default);
+ 
   return (
 
     <ColorModeContext.Provider value={colorMode} >
