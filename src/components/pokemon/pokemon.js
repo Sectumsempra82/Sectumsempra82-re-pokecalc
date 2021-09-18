@@ -1,6 +1,5 @@
-import './pokemon.css'
 import React, { useEffect, useState, useLayoutEffect } from 'react'
-
+import {axiosCached} from '../axiosCached/axiosCached'  
 
 
 
@@ -16,15 +15,12 @@ export default function Pokemon(props) {
 
     useEffect(() => {
 
-        fetch('https://pokeapi.co/api/v2/pokemon/' + props.value)
+        axiosCached.get('https://pokeapi.co/api/v2/pokemon/' + props.value)
             .then(response => {
-                if (response.ok) {
-                    return response.json()
-                }
-                throw response;
-            }).then(data => [
-                setData(data)
-            ]).catch(error => {
+                setData(response.data);
+                console.log(response);
+                console.log(response.request.fromCache ? "CACHED" : "NOT CACHED")
+            }).catch(error => {
                 //console.error('Error fetching data: ', error);
                 setError(error);
             })

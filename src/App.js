@@ -30,6 +30,17 @@ function App() {
       createTheme({
         palette: {
           mode,
+          ...(mode === 'dark'
+      ? {
+          // palette values for dark mode
+
+        }
+      : {
+          // palette values for light mode
+          background: {
+            paper: '#2290fd8a',
+          },
+        }),
         },
       }),
     [mode],

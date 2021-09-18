@@ -35,7 +35,7 @@ export default function Searchbar(props) {
             setValue(newValue.toLowerCase());
             props.setPokemon(newValue.toLowerCase());
           } else {
-            setValue(null);
+            setInputValue(null);
           }
         }}
         inputValue={value}
