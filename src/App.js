@@ -3,7 +3,7 @@ import './components/index/home';
 import Homepage from './components/index/home';
 import './components/searchbar/searchbar';
 import Searchbar from './components/searchbar/searchbar';
-import Pokemon from './components/pokemon/pokemon';
+import Pokemon from './components/Pokemon/Pokemon';
 import React, { useState, Fragment } from 'react';
 import { ColorModeContext } from './style/themeCtx';
 import { ThemeProvider, createTheme } from '@mui/material/styles';

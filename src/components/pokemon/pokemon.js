@@ -1,5 +1,7 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react'
-import {axiosCached} from '../axiosCached/axiosCached'  
+import React, { useEffect, useState, useLayoutEffect, Fragment } from 'react'
+import {axiosCached} from '../axiosCached/axiosCached'
+import PokemonStats from './PokemonStats'
+import Stack from '@mui/material/Stack';
 
 
 
@@ -14,6 +16,8 @@ export default function Pokemon(props) {
     }, [props.value])
 
     useEffect(() => {
+        setError(null);
+        setLoading(true);
 
         axiosCached.get('https://pokeapi.co/api/v2/pokemon/' + props.value)
             .then(response => {
@@ -35,14 +39,15 @@ export default function Pokemon(props) {
             return (
                 <div>
                     <span>Pokemon not found</span>
-                </div>
+                </div> 
             )
-        } else { return <pre>{error.message}</pre> }
+        } else { return (<pre>{error.message}</pre>) } 
     }
 
     return (
-        <div className="Pokemon">
-            <img src={data.sprites.other["official-artwork"].front_default} alt={data.name} />
+        <div style={{ display: 'inline-flex'}}>
+                <img src={data.sprites.other["official-artwork"].front_default !== null ? data.sprites.other["official-artwork"].front_default : data.sprites.front_default} alt={data.name} />
+                <PokemonStats data={data}/>
         </div>
     );
 }
