@@ -1,10 +1,10 @@
 import React, { useState, Fragment} from 'react';
-import useHints from '../hints/hints';
+import useHints from '../Hints/Hints';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import {ColorModeContext} from '../../style/themeCtx';
+import {ColorModeContext} from '../../style/theme';
 
 export default function Searchbar(props) {
   const [value, setValue] = useState('');

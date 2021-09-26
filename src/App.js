@@ -1,51 +1,19 @@
 import './App.scss';
-import './components/index/home';
-import Homepage from './components/index/home';
-import './components/searchbar/searchbar';
-import Searchbar from './components/searchbar/searchbar';
+import './components/Homepage/Homepage';
+import Homepage from './components/Homepage/Homepage';
+import './components/Searchbar/Searchbar';
+import Searchbar from './components/Searchbar/Searchbar';
 import Pokemon from './components/Pokemon/Pokemon';
 import React, { useState, Fragment } from 'react';
-import { ColorModeContext } from './style/themeCtx';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { ColorModeContext, useMode } from './style/theme';
+import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-
 
 function App() {
   const [pokemonName, setPokemonName] = useState('');
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)', { noSsr: true });
-  const [mode, setMode] = React.useState(prefersDarkMode ? 'dark' : 'light');
+  
+  const [theme, colorMode] = useMode('light');
 
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-      },
-    }),
-    [],
-  );
-
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-          ...(mode === 'dark'
-      ? {
-          // palette values for dark mode
-
-        }
-      : {
-          // palette values for light mode
-          background: {
-            paper: '#2290fd8a',
-          },
-        }),
-        },
-      }),
-    [mode],
-  );
- 
   return (
 
     <ColorModeContext.Provider value={colorMode} >

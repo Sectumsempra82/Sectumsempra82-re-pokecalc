@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import {axiosCached} from '../axiosCached/axiosCached'
+import {axiosCached} from '../AxiosCached/AxiosCached'
 
 
 

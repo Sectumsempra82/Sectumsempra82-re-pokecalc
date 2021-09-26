@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useLayoutEffect, Fragment } from 'react'
-import {axiosCached} from '../axiosCached/axiosCached'
+import React, { useEffect, useState, useLayoutEffect } from 'react'
+import { axiosCached } from '../AxiosCached/AxiosCached'
 import PokemonStats from './PokemonStats'
-import Stack from '@mui/material/Stack';
 
 
 
@@ -22,10 +21,7 @@ export default function Pokemon(props) {
         axiosCached.get('https://pokeapi.co/api/v2/pokemon/' + props.value)
             .then(response => {
                 setData(response.data);
-                console.log(response);
-                console.log(response.request.fromCache ? "CACHED" : "NOT CACHED")
             }).catch(error => {
-                //console.error('Error fetching data: ', error);
                 setError(error);
             })
             .finally(() => {
@@ -39,15 +35,15 @@ export default function Pokemon(props) {
             return (
                 <div>
                     <span>Pokemon not found</span>
-                </div> 
+                </div>
             )
-        } else { return (<pre>{error.message}</pre>) } 
+        } else { return (<pre>{error.message}</pre>) }
     }
 
     return (
-        <div style={{ display: 'inline-flex'}}>
-                <img src={data.sprites.other["official-artwork"].front_default !== null ? data.sprites.other["official-artwork"].front_default : data.sprites.front_default} alt={data.name} />
-                <PokemonStats data={data}/>
+        <div style={{ display: 'inline-flex' }}>
+            <img src={data.sprites.other["official-artwork"].front_default !== null ? data.sprites.other["official-artwork"].front_default : data.sprites.front_default} alt={data.name} />
+            <PokemonStats data={data} />
         </div>
     );
 }
