@@ -9,6 +9,7 @@ import { ColorModeContext, useMode } from './style/theme';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
+
 function App() {
   const [pokemonName, setPokemonName] = useState('');
   
