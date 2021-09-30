@@ -25,7 +25,7 @@ function App() {
               <Homepage />
             </header>
             <Searchbar setPokemon={setPokemonName}></Searchbar>
-            {pokemonName !== '' ? <Pokemon value={pokemonName}></Pokemon> : <Fragment></Fragment>}
+            {pokemonName !== '' ? <Pokemon value={pokemonName}></Pokemon> : null }
           </div>
         </CssBaseline>
       </ThemeProvider>

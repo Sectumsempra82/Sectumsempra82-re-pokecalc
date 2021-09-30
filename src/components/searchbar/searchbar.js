@@ -5,15 +5,26 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import {ColorModeContext} from '../../style/theme';
+import { useSelector, useDispatch } from 'react-redux'
+import { updateSelectedPokemon } from '../store/slices/pokemonSlice'
 
 export default function Searchbar(props) {
-  const [value, setValue] = useState('');
+
+  const dispatch = useDispatch()
+
+  const selectedPokemon = useSelector(state => state.pokemon.selectedPokemon)
+
+  //we keep this local, no need to share this value further above
   const [inputValue, setInputValue] = useState('');
-  const hints = useHints(value)
+
+  
+  const hints = useHints(selectedPokemon)
+
+
   const colorMode = React.useContext(ColorModeContext);
 
   const handleSubmit = (event) => {
-    props.setPokemon(value);
+    props.setPokemon(selectedPokemon);
     event.preventDefault();
   }
   
@@ -22,24 +33,26 @@ export default function Searchbar(props) {
     <span>&nbsp;</span>
     <Stack spacing={2} direction="row" style={{ margin: 'auto', width: '25vw' }} >
 
-      
-
       <Autocomplete
         freeSolo
+        //value selected when clicking a hint or pressing enter
         value={inputValue}
+        //event fired when the above value changes
         onChange={(event, newValue) => {
           
           if(newValue !== null){
             setInputValue(newValue.toLowerCase());
-            setValue(newValue.toLowerCase());
+            dispatch(updateSelectedPokemon(newValue.toLowerCase()));
             props.setPokemon(newValue.toLowerCase());
           } else {
             setInputValue(null);
           }
         }}
-        inputValue={value}
+        //actual text in the box
+        inputValue={selectedPokemon}
+        //callback when txt in the box changes
         onInputChange={(event, newInputValue) => {
-          setValue(newInputValue === '' ? '' : newInputValue.toLowerCase());
+          dispatch(updateSelectedPokemon(newInputValue === '' ? '' : newInputValue.toLowerCase()));
         }}
         id="controllable-states-demo"
         options={hints}
