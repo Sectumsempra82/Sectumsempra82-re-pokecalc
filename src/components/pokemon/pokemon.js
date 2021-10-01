@@ -41,7 +41,7 @@ export default function Pokemon(props) {
     }
 
     return (
-        <div style={{ display: 'inline-flex' }}>
+        <div className="Pokemon">
             <img src={data.sprites.other["official-artwork"].front_default !== null ? data.sprites.other["official-artwork"].front_default : data.sprites.front_default} alt={data.name} />
             <PokemonStats data={data} />
         </div>

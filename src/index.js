@@ -9,6 +9,7 @@ import '@fontsource/roboto/700.css';
 import store from './components/store/store'
 import { Provider } from 'react-redux'
 
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

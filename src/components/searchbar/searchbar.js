@@ -31,7 +31,7 @@ export default function Searchbar(props) {
   return (
     <Fragment>
     <span>&nbsp;</span>
-    <Stack spacing={2} direction="row" style={{ margin: 'auto', width: '25vw' }} >
+    <Stack spacing={2} direction="row" className="SearchBar" >
 
       <Autocomplete
         freeSolo

@@ -8,6 +8,7 @@ import React, { useState, Fragment } from 'react';
 import { ColorModeContext, useMode } from './style/theme';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import ButtonAppBar from './components/ButtonAppBar/ButtonAppBar'
 
 
 function App() {
@@ -21,9 +22,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline>
           <div className="App" style={{ background: theme.palette.background.default }}>
-            <header className="App-header">
-              <Homepage />
-            </header>
+            <ButtonAppBar/>
+            <Homepage/>
             <Searchbar setPokemon={setPokemonName}></Searchbar>
             {pokemonName !== '' ? <Pokemon value={pokemonName}></Pokemon> : null }
           </div>

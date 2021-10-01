@@ -14,7 +14,7 @@ export default function useHints(inputValue) {
   const getFilteredHints = useCallback((name) => {
     var hintsFiltered = pkmList.filter(pkm => pkm.includes(name));
     return(hintsFiltered);
-  });
+  },[pkmList]);
 
   //this useEffect actually runs every time we change input in order to filter the cached list as desired
 
