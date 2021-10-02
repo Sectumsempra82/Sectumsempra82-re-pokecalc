@@ -27,7 +27,7 @@ export default function useHints(inputValue) {
       setHints([]);
     }
 
-  }, [inputValue, pkmList])
+  }, [inputValue, pkmList, getFilteredHints])
 
 
   // We retrieve the full list only the first time and we save it in local state
