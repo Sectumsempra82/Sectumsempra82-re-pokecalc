@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import {ColorModeContext} from '../../style/theme';
+
 import { useSelector, useDispatch } from 'react-redux'
 import { updateSelectedPokemon } from '../store/slices/pokemonSlice'
 
@@ -20,20 +20,18 @@ export default function Searchbar(props) {
   
   const hints = useHints(selectedPokemon)
 
-
-  const colorMode = React.useContext(ColorModeContext);
-
   const handleSubmit = (event) => {
     props.setPokemon(selectedPokemon);
     event.preventDefault();
   }
   
   return (
-    <Fragment>
-    <span>&nbsp;</span>
+    <Fragment >
+    <span ref={props.refToSearchBar} >&nbsp;</span>
     <Stack spacing={2} direction="row" className="SearchBar" >
 
       <Autocomplete
+        
         freeSolo
         //value selected when clicking a hint or pressing enter
         value={inputValue}
@@ -62,7 +60,7 @@ export default function Searchbar(props) {
 
       <Button onClick={(e) => { handleSubmit(e) }} > SEARCH </Button>
 
-      <Button onClick={(e) => { colorMode.toggleColorMode() }} > CHANGE THEME </Button>
+     
 
     </Stack>
     </Fragment>

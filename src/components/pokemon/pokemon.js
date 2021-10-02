@@ -42,7 +42,7 @@ export default function Pokemon(props) {
 
     return (
         <div className="Pokemon">
-            <img src={data.sprites.other["official-artwork"].front_default !== null ? data.sprites.other["official-artwork"].front_default : data.sprites.front_default} alt={data.name} />
+            <img src={data.sprites.other["official-artwork"].front_default !== null ? data.sprites.other["official-artwork"].front_default : data.sprites.front_default} alt={data.name} ref={props.refToPic} />
             <PokemonStats data={data} />
         </div>
     );
