@@ -1,5 +1,5 @@
 import React, { useState, Fragment} from 'react';
-import useHints from '../Hints/Hints';
+import useHints from '../hints/hints';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
