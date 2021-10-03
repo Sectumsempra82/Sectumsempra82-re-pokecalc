@@ -1,0 +1,41 @@
+@use "sass:math";
+
+
+.App {
+  text-align: center;
+  min-height: 100vh;
+  padding-bottom: 10vh;
+}
+
+
+.Homepage {
+  align-items: center;
+  display: grid;
+  min-height: 30vh;
+}
+
+.Pokemon {
+  display: grid;
+  justify-content: center;
+  img {
+    margin: auto;
+    width: 100%;
+    max-width: 475px;
+  }
+}
+
+.SearchBar {
+  width: 95vw;
+  margin: auto;
+  justify-content: center;
+}
+
+.DataTable {
+  width: 95vw;
+  margin: auto;
+  max-width: 1000px;
+}
+
+.shortInput {
+  max-width: 80px;
+}
