@@ -97,7 +97,7 @@ export default function StatsGen1Gen2(props) {
 
 
     return (
-        <div  className="DataTable">
+        <div  className="DataTable sm:max-w-5xl max-w-7xl m-auto ">
             <TableContainer component={Paper}>
                 <Table aria-label="customized table">
                     <TableHead>

@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.Homepage h1 {
+
+      @apply text-3xl;
+}
+
+.Homepage h2 {
+      @apply text-xl;
+    }

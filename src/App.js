@@ -1,41 +1,38 @@
-import './App.scss';
+
 import './components/Homepage/Homepage';
 import Homepage from './components/Homepage/Homepage';
-import './components/searchbar/searchbar';
-import Searchbar from './components/searchbar/searchbar';
-import Pokemon from './components/pokemon/pokemon';
+import './components/Searchbar/Searchbar';
+import Searchbar from './components/Searchbar/Searchbar';
+import Pokemon from './components/Pokemon/Pokemon';
 import React, { useState, useRef, useEffect } from 'react';
-import { ColorModeContext, useMode } from './style/theme';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import { useSelector } from 'react-redux'
+
 import ButtonAppBar from './components/ButtonAppBar/ButtonAppBar'
 
 
 function App() {
-  const [pokemonName, setPokemonName] = useState('');
+
+  const [mode, setMode] = useState('light')
   const refToSearchBar = useRef(null)
-  const [theme, colorMode] = useMode('light');
+  const selectedPokemon = useSelector(state => state.pokemon.selectedPokemon)
   
   useEffect(() => {
     if( refToSearchBar.current ) { 
       setTimeout(() => { window.scrollTo({ behavior: 'smooth', top: refToSearchBar.current.offsetTop }) }, 500 )      
     }
-  },[pokemonName])
+  },[selectedPokemon])
 
   return (
-
-    <ColorModeContext.Provider value={colorMode} >
-      <ThemeProvider theme={theme}>
-        <CssBaseline>
-          <div className="App" style={{ background: theme.palette.background.default }}>
-            <ButtonAppBar/>
+        <div className={mode}>
+          <div className=" text-center min-h-screen pb-10 bg-white-500 dark:bg-gray-700" >
+            <ButtonAppBar mode={{'current': mode, 'setMode': setMode}} />
             <Homepage/>
-            <Searchbar setPokemon={setPokemonName} refToSearchBar={refToSearchBar}  ></Searchbar>
-            {pokemonName !== '' ? <Pokemon value={pokemonName} /> : null }
+            <Searchbar refToSearchBar={refToSearchBar}  ></Searchbar>
+            {selectedPokemon !== '' ? <Pokemon value={selectedPokemon} /> : null }
           </div>
-        </CssBaseline>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+        </div>
+
+
 
   );
 }
